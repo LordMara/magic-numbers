@@ -1,6 +1,6 @@
 package lordmara.magicnumbers.validator;
 
-import lordmara.magicnumbers.exception.UnsupportedFileType;
+import lordmara.magicnumbers.exception.UnsupportedFileTypeException;
 import lordmara.magicnumbers.filereader.FileExtensionAndNameReader;
 import lordmara.magicnumbers.filereader.FileSignatureReader;
 import lordmara.magicnumbers.model.FileType;
@@ -15,24 +15,24 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
 
     public FileTypeValidatorImpl(FileSignatureReader fileSignatureReader,
                                  FileExtensionAndNameReader fileExtensionAndNameReader) throws IOException,
-                                                                                               UnsupportedFileType{
+            UnsupportedFileTypeException {
         this.fileSignatureReader = fileSignatureReader;
         this.fileExtensionAndNameReader = fileExtensionAndNameReader;
         this.fileType = findFileType();
     }
 
-    private FileType findFileType() throws IOException, UnsupportedFileType{
+    private FileType findFileType() throws IOException, UnsupportedFileTypeException {
         try {
             return findFileTypeBySignature();
-        } catch (UnsupportedFileType e) {
+        } catch (UnsupportedFileTypeException e) {
             if(probeForTextFile()) {
                 return FileType.TXT;
             }
-            throw new UnsupportedFileType(e.getMessage());
+            throw new UnsupportedFileTypeException(e.getMessage());
         }
     }
 
-    private FileType findFileTypeBySignature() throws IOException, UnsupportedFileType{
+    private FileType findFileTypeBySignature() throws IOException, UnsupportedFileTypeException {
         for(FileType type: FileType.values()) {
             for(String hexSignature: type.getHexSignatures()) {
                 int LENGTH_OF_HEXDECIMAL_NUMBER = 2;
@@ -42,7 +42,7 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
                 }
             }
         }
-        throw new UnsupportedFileType(String.format("Unsupported file type with extension: %s",
+        throw new UnsupportedFileTypeException(String.format("Unsupported file type with extension: %s",
                 fileExtensionAndNameReader.getExtension()));
     }
 
