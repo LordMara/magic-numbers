@@ -6,6 +6,7 @@ import lordmara.magicnumbers.filereader.FileSignatureReader;
 import lordmara.magicnumbers.model.FileType;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.rmi.UnexpectedException;
 
 public class FileTypeValidatorImpl implements FileTypeValidator{
@@ -36,8 +37,9 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
         return null;
     }
 
-    private boolean probeForTextFile() {
-        return false;
+//    need in case of lack of BOM in text file;
+    private boolean probeForTextFile() throws IOException{
+        return Files.probeContentType(fileExtensionAndNameReader.getFile().toPath()).equals("text/plain");
     }
 
     @Override
