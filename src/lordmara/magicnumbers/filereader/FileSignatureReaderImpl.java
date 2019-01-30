@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 
 public class FileSignatureReaderImpl implements FileSignatureReader {
     private final File file;
@@ -27,6 +28,7 @@ public class FileSignatureReaderImpl implements FileSignatureReader {
     }
 
     private String encodeFileSignatureToHexadecimalString(byte[] bytes) {
-        return null;
+        BigInteger bigInteger = new BigInteger(1, bytes);
+        return String.format("%0" + (bytes.length << 1) + "x", bigInteger).toUpperCase();
     }
 }
