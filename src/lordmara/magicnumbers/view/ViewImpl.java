@@ -13,6 +13,14 @@ public class ViewImpl implements View {
     }
 
     private String getPossibleExtensions(String[] foundTypeExtension) {
-        
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String extension: foundTypeExtension) {
+            stringBuilder.append(".");
+            stringBuilder.append(extension.toLowerCase());
+            stringBuilder.append("/");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf("/"));
+
+        return stringBuilder.toString();
     }
 }
