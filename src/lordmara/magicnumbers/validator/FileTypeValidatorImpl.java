@@ -7,7 +7,6 @@ import lordmara.magicnumbers.model.FileType;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.rmi.UnexpectedException;
 
 public class FileTypeValidatorImpl implements FileTypeValidator{
     private final FileSignatureReader fileSignatureReader;
@@ -69,6 +68,11 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
 
     @Override
     public boolean validateFile() throws IOException, UnsupportedFileType {
+        for(String extension: this.fileType.getExtensions()) {
+            if(extension.equalsIgnoreCase(fileExtensionAndNameReader.getExtension())) {
+                return true;
+            }
+        }
         return false;
     }
 }
