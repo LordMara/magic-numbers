@@ -14,4 +14,16 @@ public enum FileType {
         this.offset = offset;
         this.hexSignatures = hexSignatures;
     }
+
+    public String[] getExtensions() {
+        return extensions;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public String[] getHexSignatures() {
+        return hexSignatures;
+    }
 }
