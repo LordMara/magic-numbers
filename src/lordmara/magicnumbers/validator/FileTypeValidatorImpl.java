@@ -10,14 +10,14 @@ import java.nio.file.Files;
 import java.rmi.UnexpectedException;
 
 public class FileTypeValidatorImpl implements FileTypeValidator{
-    private final FileSignatureReader signatureReader;
+    private final FileSignatureReader fileSignatureReader;
     private final FileExtensionAndNameReader fileExtensionAndNameReader;
     private final FileType fileType;
 
-    public FileTypeValidatorImpl(FileSignatureReader signatureReader,
+    public FileTypeValidatorImpl(FileSignatureReader fileSignatureReader,
                                  FileExtensionAndNameReader fileExtensionAndNameReader) throws IOException,
                                                                                                UnsupportedFileType{
-        this.signatureReader = signatureReader;
+        this.fileSignatureReader = fileSignatureReader;
         this.fileExtensionAndNameReader = fileExtensionAndNameReader;
         this.fileType = findFileType();
     }
@@ -34,7 +34,17 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
     }
 
     private FileType findFileTypeBySignature() throws IOException, UnsupportedFileType{
-        return null;
+        for(FileType type: FileType.values()) {
+            for(String hexSignature: type.getHexSignatures()) {
+                int LENGTH_OF_HEXDECIMAL_NUMBER = 2;
+                if(hexSignature.equalsIgnoreCase(fileSignatureReader.readFileSignature(fileType.getOffset(),
+                        hexSignature.length()/LENGTH_OF_HEXDECIMAL_NUMBER))) {
+                    return fileType;
+                }
+            }
+        }
+        throw new UnsupportedFileType(String.format("Unsupported file type with extension: %s",
+                fileExtensionAndNameReader.getExtension()));
     }
 
 //    need in case of lack of BOM in text file;
