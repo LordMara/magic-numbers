@@ -54,17 +54,17 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
 
     @Override
     public FileType getFileType() {
-        return null;
+        return this.fileType;
     }
 
     @Override
     public FileSignatureReader getFileSignatureReader() {
-        return null;
+        return this.fileSignatureReader;
     }
 
     @Override
     public FileExtensionAndNameReader getFileExtensionAndNameReader() {
-        return null;
+        return this.fileExtensionAndNameReader;
     }
 
     @Override
