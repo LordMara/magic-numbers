@@ -67,7 +67,7 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
     }
 
     @Override
-    public boolean validateFile() throws IOException, UnsupportedFileType {
+    public boolean validateFile() {
         for(String extension: this.fileType.getExtensions()) {
             if(extension.equalsIgnoreCase(fileExtensionAndNameReader.getExtension())) {
                 return true;

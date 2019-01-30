@@ -11,5 +11,5 @@ public interface FileTypeValidator {
     FileType getFileType();
     FileSignatureReader getFileSignatureReader();
     FileExtensionAndNameReader getFileExtensionAndNameReader();
-    boolean validateFile() throws IOException, UnsupportedFileType;
+    boolean validateFile();
 }
