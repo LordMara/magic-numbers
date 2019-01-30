@@ -14,7 +14,13 @@ public class FileExtensionAndNameReaderImpl implements FileExtensionAndNameReade
     }
 
     private String findFileExtension() {
-        return null;
+        if(this.file != null && this.file.exists()) {
+            String fileName = file.getName();
+//            add 1 to index because we are interested only in extension without dot
+            int CORRECTION_OF_INDEX = 1;
+            return fileName.substring(fileName.lastIndexOf(".") + CORRECTION_OF_INDEX);
+        }
+        return "";
     }
 
     private String findFileName() {
