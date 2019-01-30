@@ -36,9 +36,6 @@ public class FileTypeValidatorImpl implements FileTypeValidator{
         for(FileType type: FileType.values()) {
             for(String hexSignature: type.getHexSignatures()) {
                 int LENGTH_OF_HEXADECIMAL_NUMBER = 2;
-                System.out.println(hexSignature.length()/LENGTH_OF_HEXADECIMAL_NUMBER);
-                System.out.println(fileSignatureReader.readFileSignature(type.getOffset(),
-                        hexSignature.length()/LENGTH_OF_HEXADECIMAL_NUMBER));
                 if(hexSignature.equalsIgnoreCase(fileSignatureReader.readFileSignature(type.getOffset(),
                         hexSignature.length()/LENGTH_OF_HEXADECIMAL_NUMBER))) {
                     return type;
