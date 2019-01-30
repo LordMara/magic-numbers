@@ -6,20 +6,38 @@ import lordmara.magicnumbers.filereader.FileSignatureReader;
 import lordmara.magicnumbers.model.FileType;
 
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 
 public class FileTypeValidatorImpl implements FileTypeValidator{
     private final FileSignatureReader signatureReader;
     private final FileExtensionAndNameReader fileExtensionAndNameReader;
     private final FileType fileType;
 
-    public FileTypeValidatorImpl(FileSignatureReader signatureReader, FileExtensionAndNameReader fileExtensionAndNameReader) {
+    public FileTypeValidatorImpl(FileSignatureReader signatureReader,
+                                 FileExtensionAndNameReader fileExtensionAndNameReader) throws IOException,
+                                                                                               UnsupportedFileType{
         this.signatureReader = signatureReader;
         this.fileExtensionAndNameReader = fileExtensionAndNameReader;
         this.fileType = findFileType();
     }
 
-    private FileType findFileType() {
-        return  null;
+    private FileType findFileType() throws IOException, UnsupportedFileType{
+        try {
+            return findFileTypeBySignature();
+        } catch (UnsupportedFileType e) {
+            if(probeForTextFile()) {
+                return FileType.TXT;
+            }
+            throw new UnsupportedFileType(e.getMessage());
+        }
+    }
+
+    private FileType findFileTypeBySignature() throws IOException, UnsupportedFileType{
+        return null;
+    }
+
+    private boolean probeForTextFile() {
+        return false;
     }
 
     @Override
