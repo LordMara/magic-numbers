@@ -1,7 +1,9 @@
 package lordmara.magicnumbers.filereader;
 
+import java.io.File;
+
 public interface FileExtensionAndNameReader {
-    String getFile();
+    File getFile();
     String getExtension();
     String getFileName();
 }
