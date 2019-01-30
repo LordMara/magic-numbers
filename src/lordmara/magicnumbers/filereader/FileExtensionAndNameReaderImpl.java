@@ -18,7 +18,10 @@ public class FileExtensionAndNameReaderImpl implements FileExtensionAndNameReade
     }
 
     private String findFileName() {
-        return null;
+        if(this.file != null && this.file.exists()) {
+            return this.file.getName();
+        }
+        return "";
     }
 
     @Override
